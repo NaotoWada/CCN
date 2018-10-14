@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * ファイルをオープンするクラス
@@ -24,17 +25,29 @@ public class FileOpener {
 
     /** 開く対象ディレクトリ .*/
     // TODO : できればプロパティファイルにしたい
-    private static final Path _Root = Paths.get(".");
+    private static Path _Root = Paths.get(".");
 
     /** 拡張子のドット部分 .*/
     private static final String _SplitDot = "\\.";
 
     /**
+     * 入力パスが存在する場合、読み込み対象パスを置き換えて読み込む.
+     * <p>
+     * @return Map<クラス名、ファイルの全行>
+     * @throws IOException
+     */
+    public static Map<String, List<String>> openBy(Path userInputPath) throws IOException {
+        _Root = userInputPath;
+        return open();
+    }
+
+    /**
      * 入力のルートパスから特定拡張子のファイルのみを取得して、ファイル毎にまとめる.
      * <p>
      * @return Map<クラス名、ファイルの全行>
+     * @throws IOException
      */
-    public static Map<String, List<String>> open() {
+    public static Map<String, List<String>> open() throws IOException {
 
         Map<String, List<String>> javaLineMap = new HashMap<String, List<String>>();
         try {
@@ -46,6 +59,7 @@ public class FileOpener {
 
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         }
 
         return javaLineMap;
@@ -90,8 +104,10 @@ public class FileOpener {
      */
     private static List<Path> readDir(Path dirPath) throws IOException {
 
-        return Files.walk(dirPath)
-                .filter(s -> s.getFileName().toString().contains(_Extension))
-                .collect(Collectors.toList());
+        try (Stream<Path> pathStream = Files.walk(dirPath)) {
+            return pathStream
+                    .filter(s -> s.getFileName().toString().contains(_Extension))
+                    .collect(Collectors.toList());
+        }
     }
 }

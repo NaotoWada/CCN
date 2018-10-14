@@ -59,4 +59,23 @@ public class Display {
             }
         }
     }
+
+    /**
+     * 実行時に出力されるログ.
+     * <p>
+     */
+    public static void echoStartLog() {
+        System.out.println("////////////////////////////////////////");
+        System.out.println("循環的複雑度の計測を行います。");
+        System.out.println("計測対象のファイルパスを入力して下さい。");
+    }
+
+    /**
+     * 計測処理終了後に出力されるログ.
+     * <p>
+     */
+    public static void echoEndLog() {
+        System.out.println("循環的複雑度の計測を終了します。");
+        System.out.println("////////////////////////////////////////");
+    }
 }
