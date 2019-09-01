@@ -29,10 +29,6 @@ Windows環境のみ動作確認
 ## Usage
 [MesurementCCN.java](https://github.com/NaotoWada/CCN/blob/master/src/main/execute/MesurementCCN.java)を実行して、計算対象のフォルダの絶対パスを指定して下さい。
 
-## Licence
-
-[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
-
 ## Author
 
 [NaotoWada](https://github.com/NaotoWada)
